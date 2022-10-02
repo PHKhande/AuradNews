@@ -192,10 +192,8 @@ class _MyAppState extends State<MyApp> {
                                 borderRadius: BorderRadius.circular(20),
                               ),
                               child: GestureDetector(
-                                onTap: () async {
+                                 onTap: () async {
                                   final bool isOdd = index % 2 != 0;
-                                  print(isOdd);
-
                                   if (isOdd) {
                                     Navigator.push(
                                       context,
