@@ -4,6 +4,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
+import 'package:newsappflutter/aurad_news_article.dart';
 import 'artical_news.dart';
 import 'constants.dart';
 import 'list_of_country.dart';
@@ -73,6 +74,7 @@ class _MyAppState extends State<MyApp> {
             ),
       home: Scaffold(
         key: _scaffoldKey,
+        // bottomNavigationBar: Container(color: Colors.red, height: 40,),
         drawer: Drawer(
           child: ListView(
             padding: const EdgeInsets.symmetric(vertical: 32),
@@ -191,16 +193,32 @@ class _MyAppState extends State<MyApp> {
                               ),
                               child: GestureDetector(
                                 onTap: () async {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      fullscreenDialog: true,
-                                      builder: (BuildContext context) =>
-                                          ArticalNews(
-                                        newsUrl: news[index]['url'] as String,
+                                  final bool isOdd = index % 2 != 0;
+                                  print(isOdd);
+
+                                  if (isOdd) {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        fullscreenDialog: true,
+                                        builder: (BuildContext context) =>
+                                            AuradNewsArticle(
+                                          news: news[index],
+                                        ),
                                       ),
-                                    ),
-                                  );
+                                    );
+                                  } else {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        fullscreenDialog: true,
+                                        builder: (BuildContext context) =>
+                                            ArticalNews(
+                                          newsUrl: news[index]['url'] as String,
+                                        ),
+                                      ),
+                                    );
+                                  }
                                 },
                                 child: Container(
                                   padding: const EdgeInsets.symmetric(
@@ -351,7 +369,7 @@ class _MyAppState extends State<MyApp> {
       baseApi =
           'https://newsapi.org/v2/top-headlines?pageSize=10&page=$pageNum&q=$searchKey&apiKey=58b98b48d2c74d9c94dd5dc296ccf7b6';
     }
-    //print(baseApi);
+    print(baseApi);
     getDataFromApi(baseApi);
   }
 
